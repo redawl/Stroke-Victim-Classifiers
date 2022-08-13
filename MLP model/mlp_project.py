@@ -1,9 +1,11 @@
+#!/usr/bin/env python3
 import pandas as pd
 import numpy as np
 import csv
 import random
 import copy
 import matplotlib.pyplot as plt
+import argparse
 
 # training and test set file name
 train_file = "train_new.csv"
@@ -222,11 +224,17 @@ class MULTIPERCEPTON:
         print(f"Confusion matrix for test set of {self.test_datalabel_count} data labels, (Hidden units = {self.hidden_layer_neurons})")
         print(cmatrix)
         
+# Parse commandline args
+parser = argparse.ArgumentParser(description='MLP for classifying stroke data')
+parser.add_argument('--epochs', type=int, help='Number of Epochs to train', required=True)
+parser.add_argument('--hidden', default=4, type=int, help='Number of neurons in the hidden layer')
+parser.add_argument('--eta', default=0.1, type=np.float64, help='How fast the MLP can learn')
 
-hiddenneurons = 4
+args = parser.parse_args()
+hiddenneurons = args.hidden
 outputneurons = 2 
-eta = 0.1
-epochs = 50
+eta = args.eta
+epochs = args.epochs
 correct_train_accuracy = []
 correct_test_accuracy = []
 
